@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Rafly Dioniswara Pramono | FSWD 6B" />
+    <meta
+      name="description"
+      content="Ini adalah tugas Homework Week 5 Basic Javascript - Rakamin Academy"
+    />
+
+    <title>Homework Week 5 | Basic Javascript</title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./styles.css" />
+
+    <!-- Bootstrap 5 CDN CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>    
+    <div id="backdrop-box">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+    <div id="alert-box">
+      <div class="alert-container">
+        <h5 id="alert-title" class="text-white"></h5>
+        <p id="alert-text" class="text-white"></p>
+      </div>
+    </div>
+    <div class="registration-wrapper">
+      <div id="registration-entry" class="registration-box">
+        <h2 class="text-center mb-5">Registration Entry</h2>
+        <form onsubmit="handleSubmit(event)">
+          <div class="form-floating mb-3">
+            <input
+              id="field-nama"
+              type="text"
+              class="form-control"
+              placeholder="Nama"
+              required
+              autocomplete="off"
+              autocapitalize="off"
+              autofocus="true"
+            />
+            <label for="field-nama">Nama</label>
+            <div class="form-text">
+              <span class="text-danger">* </span>pengisian nama minimal 10
+              karakter
+            </div>
+          </div>
+          <div class="form-floating mb-3">
+            <input
+              id="field-umur"
+              type="text"
+              class="form-control"
+              placeholder="Umur"
+              required
+              autocomplete="off"
+              autocapitalize="off"
+            />
+            <label for="field-umur">Umur</label>
+            <div class="form-text">
+              <span class="text-danger">* </span>pengisian umur minimal 25 tahun
+            </div>
+          </div>
+          <div class="form-floating mb-4">
+            <input
+              id="field-uang-saku"
+              type="text"
+              class="form-control"
+              placeholder="Uang Saku"
+              required
+              autocomplete="off"
+              autocapitalize="off"
+            />
+            <label for="field-uang-saku">Uang Saku</label>
+            <div class="form-text">
+              <span class="text-danger">* </span>pengisian uang saku minimal
+              100.000 dan maximal 1.000.000
+            </div>
+          </div>
+          <div class="button-group">
+            <button type="submit" class="button-submit text-white">
+              Submit
+            </button>
+            <button
+              type="button"
+              onclick="changeTabToRegistrationList()"
+              class="button-check-list text-white"
+            >
+              Check List
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div id="registration-list" class="registration-list-box">
+        <h2 class="text-center mb-5">Registration List</h2>
+        <table id="my-table" class="table table-hover table-bordered">          
+          <thead>
+            <tr>
+              <th scope="col">No.</th>
+              <th scope="col">Nama</th>
+              <th scope="col">Umur</th>
+              <th scope="col">Uang Saku</th>
+            </tr>
+          </thead>
+          <tbody id="table-body">            
+          </tbody>
+        </table>
+          <div class="button-group">            
+            <button
+              type="button"
+              onclick="changeTabToRegistrationEntry()"
+              class="button-check-list text-white"
+            >
+              Back
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Bootstrap 5 CDN JS -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+      crossorigin="anonymous"
+    ></script>
+    <script src="./index.js"></script>
+  </body>
+</html>
