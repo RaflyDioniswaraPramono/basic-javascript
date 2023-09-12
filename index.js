@@ -1,7 +1,7 @@
 // declare variable datas for save the data
 let datas = [];
 
-// function for handle and take the field values
+// function for submit handle and get the field values
 const handleSubmit = async (event) => {
   // methode that make the window doesn't refresh after submit button clicked
   event.preventDefault();
@@ -15,7 +15,7 @@ const handleSubmit = async (event) => {
   // validation regular expression for umur and uang saku ( numbers only )
   var validasiAngka = /^[0-9]+$/;
 
-  // try catch block to take the field values and make some validation
+  // try catch block to get the field values and make some validation
   try {
     // wait filed filled and get field values from index.html 
     this.valueNama = await document.getElementById("field-nama").value;
