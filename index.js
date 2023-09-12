@@ -1,14 +1,46 @@
+// declare variable datas for save the data
 let datas = [];
 
+// function for handle and take the field values
 const handleSubmit = async (event) => {
-  var validasiAngka = /^[0-9]+$/;
+  // methode that make the window doesn't refresh after submit button clicked
   event.preventDefault();
 
+  // validation regular expression for nama ( words and whitespaces only )
+  var validasiHuruf = /^[A-Za-z\s]*$/;
+
+  // validation regular expression for nama ( cannot whitespaces only )
+  var validasiSpasi = /^\s*$/;
+
+  // validation regular expression for umur and uang saku ( numbers only )
+  var validasiAngka = /^[0-9]+$/;
+
+  // try catch block to take the field values and make some validation
   try {
+    // wait filed filled and get field values from index.html 
     this.valueNama = await document.getElementById("field-nama").value;
     this.valueUmur = await document.getElementById("field-umur").value;
     this.valueUangSaku = await document.getElementById("field-uang-saku").value;
 
+    // check to validate that the nama field input contents are contain word and white spaces only
+    if (!valueNama.match(validasiHuruf)) {
+      return valuesValidate(
+        "error",
+        "Registration Failed!",
+        "Pengisian field nama hanya boleh huruf dan spasi!"
+      );
+    }
+
+    // check to validate that the nama field input contents are not contain white spaces only
+    if (valueNama.match(validasiSpasi)) {
+      return valuesValidate(
+        "error",
+        "Registration Failed!",
+        "Pengisian field nama tidak boleh spasi saja!"
+      )
+    }
+
+    // check to validate that nama length must more than 10 character
     if (valueNama.length < 10) {
       return valuesValidate(
         "error",
@@ -17,6 +49,7 @@ const handleSubmit = async (event) => {
       );
     }
 
+    // check to validate that the umur field input contents are only numbers
     if (!valueUmur.match(validasiAngka)) {
       return valuesValidate(
         "error",
@@ -25,14 +58,16 @@ const handleSubmit = async (event) => {
       );
     }
 
-    if (valueUmur < 25 || valueUmur > 80) {
+    // check to validate that the umur field have a minimal and maximal values
+    if (valueUmur < 25 || valueUmur > 100) {
       return valuesValidate(
         "error",
         "Registration Failed!",
-        "Umur minimal adalah 25 dan maximal 80 tahun!"
+        "Umur minimal adalah 25 dan maximal 100 tahun!"
       );
     }
 
+    // check to validate that the uang saku field input contents are only numbers
     if (!valueUangSaku.match(validasiAngka)) {
       return valuesValidate(
         "error",
@@ -41,6 +76,7 @@ const handleSubmit = async (event) => {
       );
     }
 
+    // check to validate that uang saku field have a minimal and maximal values
     if (valueUangSaku < 100000) {
       return valuesValidate(
         "error",
@@ -54,6 +90,8 @@ const handleSubmit = async (event) => {
         "Maximal uang saku adalalah 1.000.000!"
       );
     } else {
+      // call the function that handle alert and message
+      // send parameters registration status, registration title and registration message
       valuesValidate(
         "success",
         "Registration Successfully!",
@@ -65,16 +103,21 @@ const handleSubmit = async (event) => {
   }
 };
 
+// function for handle alert and messages
 const valuesValidate = async (status, title, message) => {
+  // get alert elemnts from index.html 
   const alertContainerElement = document.getElementById("alert-box");
   const alertTitleElement = document.getElementById("alert-title");
   const alertTextElement = document.getElementById("alert-text");
 
+  // try cacth block for make the function synchronus
   try {
+    // lets wait parameter full filled from previous function
     const statusType = await status;
     const titleText = await title;
     const messageText = await message;
 
+    // error handler
     if (statusType === "error") {
       alertContainerElement.style.display = "block";
       setTimeout(() => {
@@ -98,6 +141,7 @@ const valuesValidate = async (status, title, message) => {
       alertTitleElement.innerHTML = await titleText;
       alertTextElement.innerHTML = await messageText;
 
+      // call the function for accepted and validated datas
       return acceptedValidate();
     }
   } catch (error) {
@@ -105,22 +149,27 @@ const valuesValidate = async (status, title, message) => {
   }
 };
 
-const acceptedValidate = async () => {
+// function for reset all filled fields
+const acceptedValidate = () => {
   document.getElementById("backdrop-box").classList.add("show");
 
   try {
+    // asyncrhonous function to make the alert and backdrop show only 3 secconds
     setTimeout(() => {
       document.getElementById("backdrop-box").classList.remove("show");
       document.querySelectorAll("input").forEach((input) => (input.value = ""));
     }, 3000);
 
+    // call function for push validated datas to array
     return pushDatasToArray();
   } catch (error) {
     throw error;
   }
 };
 
+// function for push data to array and display them to table registration data list
 const pushDatasToArray = () => {
+  // unshift method that make validated data in the first order
   datas.unshift({
     nama: this.valueNama,
     umur: this.valueUmur,
@@ -132,20 +181,45 @@ const pushDatasToArray = () => {
   for (var i = number; i < datas.length; i++) {
     number++;
   }
+
+  // inject html tag from javascript, to make table head and table row for new validated data
   tableBody.innerHTML += `<th scope="row">${number}</th>
     <td>${datas[0].nama}</td>
     <td>${datas[0].umur}</td>
     <td>${datas[0].uangSaku}</td>
     `;
 
-  console.log(datas);
+  // call function to get average of umur and uang saku
+  getAverage();
 };
 
+// function for calculate umur average and uang saku average, then display it to table registration data list
+const getAverage = () => {
+  let totalUmur = 0;
+  let totalUangSaku = 0;
+  let umurAverage = 0;
+  let uangSakuAverage = 0;
+
+  for (var i = 0; i < datas.length; i++) {
+    totalUmur += parseInt(datas[i].umur);
+    totalUangSaku += parseInt(datas[i].uangSaku);
+
+    umurAverage = totalUmur / datas.length;
+    uangSakuAverage = totalUangSaku / datas.length;
+  }
+
+  // set average of umur and uang saku
+  document.getElementById("umur-average").innerHTML = `${umurAverage} tahun`;
+  document.getElementById("uang-saku-average").innerHTML = `Rp. ${uangSakuAverage},00`;
+};
+
+// function for change tab to registration list
 const changeTabToRegistrationList = () => {
   document.getElementById("registration-entry").style.display = "none";
   document.getElementById("registration-list").style.display = "block";
 };
 
+// function for change tab to registration entry
 const changeTabToRegistrationEntry = () => {
   document.getElementById("registration-entry").style.display = "block";
   document.getElementById("registration-list").style.display = "none";

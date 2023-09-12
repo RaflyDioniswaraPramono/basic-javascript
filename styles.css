@@ -93,7 +93,20 @@ body {
   width: 50%;  
 }
 
-@media screen and (max-width: 430px) {
+
+@media only screen and (max-width: 1024px) {
+  .registration-wrapper .registration-box {
+    width: 40%;
+  }
+}
+
+@media only screen and (max-width: 770px) {
+  .registration-wrapper .registration-box {
+    width: 50%;
+  }
+}
+
+@media only screen and (max-width: 430px) {
   .registration-wrapper .registration-box {
     width: 95%;
   }
