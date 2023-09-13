@@ -1,9 +1,7 @@
-// declare variable datas for save the data
 let datas = [];
 
 // function for submit handle and get the field values
-const handleSubmit = async (event) => {
-  // methode that make the window doesn't refresh after submit button clicked
+const handleSubmit = async (event) => {  
   event.preventDefault();
 
   // validation regular expression for nama ( words and whitespaces only )
@@ -14,10 +12,9 @@ const handleSubmit = async (event) => {
 
   // validation regular expression for umur and uang saku ( numbers only )
   var validasiAngka = /^[0-9]+$/;
-
-  // try catch block to get the field values and make some validation
+  
   try {
-    // wait filed filled and get field values from index.html 
+    // wait field filled and get field values from index.html 
     this.valueNama = await document.getElementById("field-nama").value;
     this.valueUmur = await document.getElementById("field-umur").value;
     this.valueUangSaku = await document.getElementById("field-uang-saku").value;
@@ -104,15 +101,12 @@ const handleSubmit = async (event) => {
 };
 
 // function for handle alert and messages
-const valuesValidate = async (status, title, message) => {
-  // get alert elemnts from index.html 
+const valuesValidate = async (status, title, message) => {  
   const alertContainerElement = document.getElementById("alert-box");
   const alertTitleElement = document.getElementById("alert-title");
   const alertTextElement = document.getElementById("alert-text");
-
-  // try cacth block for make the function synchronus
-  try {
-    // lets wait parameter full filled from previous function
+  
+  try {    
     const statusType = await status;
     const titleText = await title;
     const messageText = await message;
@@ -149,12 +143,12 @@ const valuesValidate = async (status, title, message) => {
   }
 };
 
-// function for reset all filled fields
+// function for reset all filled fields after registration successfully
 const acceptedValidate = () => {
   document.getElementById("backdrop-box").classList.add("show");
 
   try {
-    // asyncrhonous function to make the alert and backdrop show only 3 secconds
+    // set timeout to make the alert and backdrop show only 3 secconds
     setTimeout(() => {
       document.getElementById("backdrop-box").classList.remove("show");
       document.querySelectorAll("input").forEach((input) => (input.value = ""));
